@@ -305,6 +305,20 @@ SUITE(file_buffer_tests)
         VERIFY_IS_FALSE(stream.is_open());
     }
 
+    TEST(ReadSingleChar_full_value)
+    {
+        utility::string_t fname = U("ReadSingleChar_full_value.txt");
+        fill_file(fname);
+
+        auto peekStream = OPEN_R<uint8_t>(fname).get();
+        VERIFY_ARE_EQUAL('a', peekStream.getc().get());
+        peekStream.close().get();
+
+        auto readStream = OPEN_R<uint8_t>(fname).get();
+        VERIFY_ARE_EQUAL('a', readStream.bumpc().get());
+        readStream.close().get();
+    }
+
     TEST(SequentialReadWrite)
     {
         utility::string_t fname = U("SequentialReadWrite.txt");
