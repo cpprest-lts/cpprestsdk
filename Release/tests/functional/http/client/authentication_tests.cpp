@@ -676,9 +676,9 @@ SUITE(authentication_tests)
         VERIFY_ARE_EQUAL(return_code, response.status_code());
     }
 
-    TEST(auth_no_data) { auth_test_impl(false); }
+    TEST(auth_no_data, "NetworkRequired", "true") { auth_test_impl(false); }
 
-    TEST(unsuccessful_auth_with_basic_cred) { auth_test_impl(true); }
+    TEST(unsuccessful_auth_with_basic_cred, "NetworkRequired", "true") { auth_test_impl(true); }
 
     TEST_FIXTURE(uri_address, set_user_options_asio_http)
     {

@@ -18,6 +18,7 @@ enable_testing()
 set(WERROR ON CACHE BOOL "Treat Warnings as Errors.")
 set(CPPREST_EXCLUDE_WEBSOCKETS OFF CACHE BOOL "Exclude websockets functionality.")
 set(CPPREST_EXCLUDE_COMPRESSION OFF CACHE BOOL "Exclude compression functionality.")
+set(CPPREST_TEST_NETWORK ON CACHE BOOL "Run tests requiring external network access.")
 set(CPPREST_EXCLUDE_BROTLI ON CACHE BOOL "Exclude Brotli compression functionality.")
 set(CPPREST_EXPORT_DIR cmake/cpprestsdk CACHE STRING "Directory to install CMake config files.")
 set(CPPREST_INSTALL_HEADERS ON CACHE BOOL "Install header files.")
@@ -255,10 +256,14 @@ function(add_casablanca_test NAME SOURCES_VAR)
       # so that they share one exception table and catch the wrong exception
       target_link_libraries(${NAME} PRIVATE -Wl,-no_deduplicate)
     endif()
+      set(_test_runner_args)
+      if(NOT CPPREST_TEST_NETWORK)
+        list(APPEND _test_runner_args /skip-network)
+      endif()
     if (BUILD_SHARED_LIBS)
       add_test(NAME ${NAME}
         WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-        COMMAND test_runner $<TARGET_FILE_NAME:${NAME}>
+        COMMAND test_runner ${_test_runner_args} $<TARGET_FILE_NAME:${NAME}>
       )
     endif()
   endif()

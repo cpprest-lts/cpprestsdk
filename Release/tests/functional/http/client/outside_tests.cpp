@@ -41,7 +41,7 @@ namespace client
 {
 SUITE(outside_tests)
 {
-    TEST_FIXTURE(uri_address, outside_cnn_dot_com)
+    TEST_FIXTURE(uri_address, outside_cnn_dot_com, "NetworkRequired", "true")
     {
         handle_timeout([] {
             // http://www.cnn.com redirects users from countries outside of the US to the "http://edition.cnn.com/" drop
@@ -60,7 +60,7 @@ SUITE(outside_tests)
         });
     }
 
-    TEST_FIXTURE(uri_address, outside_wikipedia_compressed_http_response)
+    TEST_FIXTURE(uri_address, outside_wikipedia_compressed_http_response, "NetworkRequired", "true")
     {
         if (web::http::compression::builtin::supported() == false)
         {
@@ -86,7 +86,7 @@ SUITE(outside_tests)
         VERIFY_ARE_EQUAL(encoding, U("gzip"));
     }
 
-    TEST_FIXTURE(uri_address, outside_google_dot_com)
+    TEST_FIXTURE(uri_address, outside_google_dot_com, "NetworkRequired", "true")
     {
         // Use code.google.com instead of www.google.com, which redirects
         http_client client(U("http://code.google.com"));
@@ -98,7 +98,7 @@ SUITE(outside_tests)
         }
     }
 
-    TEST_FIXTURE(uri_address, multiple_https_requests)
+    TEST_FIXTURE(uri_address, multiple_https_requests, "NetworkRequired", "true")
     {
         handle_timeout([&] {
             // Use code.google.com instead of www.google.com, which redirects
@@ -115,7 +115,7 @@ SUITE(outside_tests)
     }
 
 #if (defined(_MSC_VER) && (_MSC_VER >= 1900)) && !CPPREST_FORCE_PPLX
-    TEST_FIXTURE(uri_address, multiple_https_requests_sync_scheduler)
+    TEST_FIXTURE(uri_address, multiple_https_requests_sync_scheduler, "NetworkRequired", "true")
     {
         struct sync_scheduler : public scheduler_interface
         {
@@ -148,7 +148,7 @@ SUITE(outside_tests)
     }
 #endif
 
-    TEST_FIXTURE(uri_address, reading_google_stream)
+    TEST_FIXTURE(uri_address, reading_google_stream, "NetworkRequired", "true")
     {
         handle_timeout([&] {
             // Use code.google.com instead of www.google.com, which redirects
@@ -170,7 +170,7 @@ SUITE(outside_tests)
         });
     }
 
-    TEST_FIXTURE(uri_address, no_transfer_encoding_content_length)
+    TEST_FIXTURE(uri_address, no_transfer_encoding_content_length, "NetworkRequired", "true")
     {
         handle_timeout([] {
             http_client client(U("http://ws.audioscrobbler.com/2.0/") U(

@@ -409,7 +409,7 @@ SUITE(connections_and_errors)
 #endif
 
     // Try to connect to a server on a closed port and cancel the operation.
-    TEST_FIXTURE(uri_address, cancel_bad_port)
+    TEST_FIXTURE(uri_address, cancel_bad_port, "NetworkRequired", "true")
     {
         // http_client_asio had a bug where, when canceled, it would cancel only the
         // current connection but then go and try the next address from the list of

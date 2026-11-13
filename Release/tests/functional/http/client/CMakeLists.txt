@@ -27,7 +27,7 @@ set(SOURCES
 )
 
 add_casablanca_test(httpclient_test SOURCES)
-if(BUILD_SHARED_LIBS)
+if(BUILD_SHARED_LIBS AND CPPREST_TEST_NETWORK)
   add_test(NAME httpclient_test_badssl
     WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     COMMAND test_runner /badssl /select:@Requires=badssl $<TARGET_FILE_NAME:httpclient_test>

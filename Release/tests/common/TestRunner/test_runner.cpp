@@ -268,6 +268,11 @@ static bool matched_properties(const UnitTest::TestProperties& test_props)
 #endif
 #endif
 
+    if (UnitTest::GlobalSettings::Has("skip-network") && test_props.Has("NetworkRequired"))
+    {
+        return false;
+    }
+
     // The 'Require' property on a test case is special.
     // It requires a certain global setting to be fulfilled to execute.
     if (test_props.Has("Requires"))

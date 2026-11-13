@@ -28,7 +28,7 @@ if (NOT CPPREST_EXCLUDE_WEBSOCKETS)
   )
 
   add_casablanca_test(websocketsclient_test SOURCES)
-  if(BUILD_SHARED_LIBS)
+  if(BUILD_SHARED_LIBS AND CPPREST_TEST_NETWORK)
     add_test(NAME websocketsclient_test_badssl
       WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
       COMMAND test_runner /badssl /select:@Requires=badssl $<TARGET_FILE_NAME:websocketsclient_test>
