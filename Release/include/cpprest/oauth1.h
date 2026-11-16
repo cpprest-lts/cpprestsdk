@@ -73,6 +73,8 @@ private:
 };
 
 // Constant strings for OAuth 1.0.
+// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+// during the static initialization of another translation unit, so do not use them there.
 typedef utility::string_t oauth1_string;
 class oauth1_strings
 {
@@ -92,6 +94,10 @@ namespace experimental
 /// <summary>
 /// Constant strings for OAuth 1.0 signature methods.
 /// </summary>
+/// <remarks>
+/// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+/// during the static initialization of another translation unit, so do not use them there.
+/// </remarks>
 typedef utility::string_t oauth1_method;
 class oauth1_methods
 {

@@ -13,7 +13,7 @@
 
 #include "stdafx.h"
 
-static const utility::string_t oneSlash = _XPLATSTR("/");
+static const utility::char_t oneSlash[] = _XPLATSTR("/");
 
 namespace web
 {

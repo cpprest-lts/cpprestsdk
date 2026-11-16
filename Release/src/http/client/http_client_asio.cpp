@@ -83,10 +83,11 @@ using utility::conversions::details::to_string;
 using std::to_string;
 #endif
 
+#define CRLF std::string("\r\n")
+#define CRLFCRLF std::string("\r\n\r\n")
+
 namespace
 {
-const std::string CRLF("\r\n");
-
 std::string calc_cn_host(const web::http::uri& baseUri, const web::http::http_headers& requestHeaders)
 {
     std::string result;
@@ -653,7 +654,7 @@ public:
             {
                 m_context->m_timer.reset();
                 m_context->m_connection->async_read_until(m_response,
-                                                          CRLF + CRLF,
+                                                          CRLFCRLF,
                                                           boost::bind(&ssl_proxy_tunnel::handle_status_line,
                                                                       shared_from_this(),
                                                                       boost::asio::placeholders::error));
@@ -1296,7 +1297,7 @@ private:
             // Read until the end of entire headers
             m_connection->async_read_until(
                 m_body_buf,
-                CRLF + CRLF,
+                CRLFCRLF,
                 boost::bind(&asio_context::handle_status_line, shared_from_this(), boost::asio::placeholders::error));
         }
         else
@@ -2034,15 +2035,6 @@ static bool is_retrieval_request(method method)
     return methods::GET == method || methods::HEAD == method;
 }
 
-static const std::vector<utility::string_t> request_body_header_names =
-{
-    header_names::content_encoding,
-    header_names::content_language,
-    header_names::content_length,
-    header_names::content_location,
-    header_names::content_type
-};
-
 // A request continuation that follows redirects according to the specified configuration.
 // This implementation only supports retrieval redirects, as it cannot redirect e.g. a POST request
 // using the same method since the request body may have been consumed.
@@ -2070,6 +2062,14 @@ http_redirect_follower::http_redirect_follower(http_client_config config, const 
     redirect.headers() = request.headers();
     // However, this implementation only supports retrieval redirects, with no body, so Content-* headers
     // should be removed
+    static const std::vector<utility::string_t> request_body_header_names =
+    {
+        header_names::content_encoding,
+        header_names::content_language,
+        header_names::content_length,
+        header_names::content_location,
+        header_names::content_type
+    };
     for (const auto& content_header : request_body_header_names)
     {
         redirect.headers().remove(content_header);

@@ -29,7 +29,7 @@ namespace details
 {
 pplx::extensibility::critical_section_t http_server_api::s_lock;
 
-std::unique_ptr<http_server> http_server_api::s_server_api((http_server*)nullptr);
+std::unique_ptr<http_server> http_server_api::s_server_api;
 
 pplx::details::atomic_long http_server_api::s_registrations(0L);
 

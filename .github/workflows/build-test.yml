@@ -23,6 +23,13 @@ jobs:
       matrix:
         os: [ubuntu-24.04, ubuntu-24.04-arm, ubuntu-26.04, ubuntu-26.04-arm]
         build_type: [Debug, Release]
+        include:
+          # This entry adds test_static_package to the existing job with the same os and build_type.
+          # If the matrix no longer has that job, GitHub runs this entry as a job of its own,
+          # so the test is not skipped silently.
+          - os: ubuntu-26.04
+            build_type: Release
+            test_static_package: true
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -77,6 +84,16 @@ jobs:
           cmake -S Release/tests/find_package -B build-find-package -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_PREFIX_PATH="$PWD/install"
           cmake --build build-find-package
           build-find-package/find_package_test
+
+      - name: Test the installed static package
+        if: matrix.test_static_package
+        run: |
+          cmake -B build-static -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
+          cmake --build build-static
+          cmake --install build-static --prefix install-static
+          cmake -S Release/tests/find_package -B build-find-package-static -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_PREFIX_PATH="$PWD/install-static"
+          cmake --build build-find-package-static
+          build-find-package-static/find_package_test
 
       - name: Test with badssl.com
         continue-on-error: true
@@ -148,9 +165,10 @@ jobs:
       matrix:
         include:
           - os: macos-15
-            build_type: Release
-          - os: macos-26
             build_type: Debug
+          - os: macos-26
+            build_type: Release
+            test_static_package: true
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -173,6 +191,16 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure -LE badssl
 
+      - name: Test the installed static package
+        if: matrix.test_static_package
+        run: |
+          cmake -B build-static -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)" -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
+          cmake --build build-static
+          cmake --install build-static --prefix install-static
+          cmake -S Release/tests/find_package -B build-find-package-static -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)" -DCMAKE_PREFIX_PATH="$PWD/install-static"
+          cmake --build build-find-package-static
+          build-find-package-static/find_package_test
+
       - name: Test with badssl.com
         continue-on-error: true
         run: ctest --test-dir build --output-on-failure -L badssl
@@ -186,6 +214,13 @@ jobs:
         build_type: [Debug, Release]
         http: [default]
         include:
+          # This entry adds test_static_package to the existing job with the same os, build_type
+          # and http. If the matrix no longer has that job, GitHub runs this entry as a job of its
+          # own, so the test is not skipped silently.
+          - os: windows-2025-vs2026
+            build_type: Release
+            http: default
+            test_static_package: true
           - os: windows-2025-vs2026
             build_type: Release
             http: asio
@@ -246,6 +281,17 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure -LE badssl
+
+      - name: Test the installed static package
+        if: matrix.test_static_package
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          cmake -B build-static -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT\scripts\buildsystems\vcpkg.cmake" -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF
+          cmake --build build-static --config Release
+          cmake --install build-static --config Release --prefix install-static
+          cmake -S Release/tests/find_package -B build-find-package-static -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT\scripts\buildsystems\vcpkg.cmake" -DCMAKE_PREFIX_PATH="$PWD\install-static"
+          cmake --build build-find-package-static --config Release
+          build-find-package-static\Release\find_package_test.exe
 
       - name: Test with badssl.com
         continue-on-error: true
