@@ -111,7 +111,7 @@ static std::string build_error_msg(const std::error_code& ec, const std::string&
     return result;
 }
 
-static utility::string_t g_subProtocolHeader(_XPLATSTR("Sec-WebSocket-Protocol"));
+static const utility::char_t g_subProtocolHeader[] = _XPLATSTR("Sec-WebSocket-Protocol");
 
 class wspp_callback_client : public websocket_client_callback_impl,
                              public std::enable_shared_from_this<wspp_callback_client>

@@ -31,7 +31,7 @@ namespace websockets
 {
 namespace client
 {
-static ::utility::string_t g_subProtocolHeader = _XPLATSTR("Sec-WebSocket-Protocol");
+static const ::utility::char_t g_subProtocolHeader[] = _XPLATSTR("Sec-WebSocket-Protocol");
 
 void websocket_client_config::set_user_agent(const utf8string& user_agent)
 {
