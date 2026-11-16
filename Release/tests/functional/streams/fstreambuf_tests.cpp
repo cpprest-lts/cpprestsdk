@@ -305,6 +305,50 @@ SUITE(file_buffer_tests)
         VERIFY_IS_FALSE(stream.is_open());
     }
 
+    TEST(ReadSingleChar_full_value)
+    {
+        utility::string_t fname = U("ReadSingleChar_full_value.txt");
+        fill_file(fname);
+
+        auto peekStream = OPEN_R<uint8_t>(fname).get();
+        VERIFY_ARE_EQUAL('a', peekStream.getc().get());
+        peekStream.close().get();
+
+        auto readStream = OPEN_R<uint8_t>(fname).get();
+        VERIFY_ARE_EQUAL('a', readStream.bumpc().get());
+        readStream.close().get();
+    }
+
+    TEST(SingleChar_high_bit)
+    {
+        // A character is returned as a non-negative int_type, which cannot be mistaken for eof,
+        // even where char is signed
+        utility::string_t fname = U("SingleChar_high_bit.txt");
+
+        auto writeStream = OPEN_W<char>(fname).get();
+        VERIFY_ARE_EQUAL(0xFF, writeStream.putc('\xFF').get());
+        VERIFY_ARE_EQUAL(0xFF, writeStream.putc('\xFF').get());
+        VERIFY_ARE_EQUAL(0xFF, writeStream.putc('\xFF').get());
+        writeStream.close().get();
+
+        auto peekStream = OPEN_R<char>(fname).get();
+        VERIFY_ARE_EQUAL(0xFF, peekStream.getc().get());
+        peekStream.close().get();
+
+        auto readStream = OPEN_R<char>(fname).get();
+        VERIFY_ARE_EQUAL(0xFF, readStream.bumpc().get());
+        VERIFY_ARE_EQUAL(0xFF, readStream.getc().get());
+        // The synchronous reads return requires_async when the character is not already buffered
+        auto ch = readStream.sgetc();
+        if (ch == concurrency::streams::char_traits<char>::requires_async()) ch = readStream.getc().get();
+        VERIFY_ARE_EQUAL(0xFF, ch);
+        ch = readStream.sbumpc();
+        if (ch == concurrency::streams::char_traits<char>::requires_async()) ch = readStream.bumpc().get();
+        VERIFY_ARE_EQUAL(0xFF, ch);
+        VERIFY_ARE_EQUAL(0xFF, readStream.bumpc().get());
+        readStream.close().get();
+    }
+
     TEST(SequentialReadWrite)
     {
         utility::string_t fname = U("SequentialReadWrite.txt");

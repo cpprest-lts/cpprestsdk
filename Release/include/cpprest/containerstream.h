@@ -122,7 +122,7 @@ protected:
     {
         try
         {
-            int_type retVal = (this->write(&ch, 1) == 1) ? static_cast<int_type>(ch) : traits::eof();
+            int_type retVal = (this->write(&ch, 1) == 1) ? traits::to_int_type(ch) : traits::eof();
             return pplx::task_from_result<int_type>(retVal);
         }
         catch (...)
@@ -393,7 +393,7 @@ private:
     {
         _CharType value{};
         auto read_size = this->read(&value, 1, advance);
-        return read_size == 1 ? static_cast<int_type>(value) : traits::eof();
+        return read_size == 1 ? traits::to_int_type(value) : traits::eof();
     }
 
     /// <summary>

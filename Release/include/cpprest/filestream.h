@@ -284,10 +284,10 @@ protected:
         if (written == sizeof(_CharType))
         {
             delete callback;
-            return pplx::task_from_result<int_type>(ch);
+            return pplx::task_from_result<int_type>(traits::to_int_type(ch));
         }
 
-        return pplx::create_task(result_tce).then([sharedCh](size_t) { return static_cast<int_type>(*sharedCh); });
+        return pplx::create_task(result_tce).then([sharedCh](size_t) { return traits::to_int_type(*sharedCh); });
     }
 
     /// <summary>
@@ -386,7 +386,7 @@ protected:
                     auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
                     _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
                     m_info->m_rdpos += 1;
-                    return pplx::task_from_result<int_type>(ch);
+                    return pplx::task_from_result<int_type>(traits::to_int_type(ch));
                 }
             }
 
@@ -399,7 +399,7 @@ protected:
             {
                 pplx::extensibility::scoped_recursive_lock_t lck(m_info->m_lock);
                 m_info->m_rdpos += 1;
-                _CharType ch1 = (_CharType)callback->m_ch;
+                int_type ch1 = traits::to_int_type(callback->m_ch);
                 delete callback;
                 return pplx::task_from_result<int_type>(ch1);
             }
@@ -426,7 +426,7 @@ protected:
         auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
         _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
         m_info->m_rdpos += 1;
-        return (int_type)ch;
+        return traits::to_int_type(ch);
     }
 
     pplx::task<int_type> _getcImpl()
@@ -441,7 +441,7 @@ protected:
             {
                 auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
                 _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
-                return pplx::task_from_result<int_type>(ch);
+                return pplx::task_from_result<int_type>(traits::to_int_type(ch));
             }
         }
 
@@ -453,7 +453,7 @@ protected:
         if (ch == sizeof(_CharType))
         {
             pplx::extensibility::scoped_recursive_lock_t lck(m_info->m_lock);
-            _CharType ch1 = (_CharType)callback->m_ch;
+            int_type ch1 = traits::to_int_type(callback->m_ch);
             delete callback;
             return pplx::task_from_result<int_type>(ch1);
         }
@@ -487,7 +487,7 @@ protected:
 
         auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
         _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
-        return (int_type)ch;
+        return traits::to_int_type(ch);
     }
 
     /// <summary>
@@ -874,7 +874,7 @@ private:
             if (result == sizeof(_CharType))
             {
                 m_info->m_rdpos += 1;
-                m_op.set(m_ch);
+                m_op.set(traits::to_int_type(m_ch));
             }
             else
             {
@@ -889,7 +889,7 @@ private:
             delete this;
         }
 
-        int_type m_ch;
+        _CharType m_ch;
 
     private:
         _file_info* m_info;
@@ -908,7 +908,7 @@ private:
         {
             if (result == sizeof(_CharType))
             {
-                m_op.set(m_ch);
+                m_op.set(traits::to_int_type(m_ch));
             }
             else
             {
@@ -917,7 +917,7 @@ private:
             delete this;
         }
 
-        int_type m_ch;
+        _CharType m_ch;
 
         virtual void on_error(const std::exception_ptr& e)
         {

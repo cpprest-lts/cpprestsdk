@@ -86,6 +86,8 @@ public:
         return std::char_traits<char>::length(reinterpret_cast<const char*>(str));
     }
 
+    static int_type to_int_type(unsigned char c) { return static_cast<int_type>(c); }
+
     static void assign(unsigned char& left, const unsigned char& right) { left = right; }
     static unsigned char* assign(unsigned char* left, size_t n, unsigned char value)
     {
