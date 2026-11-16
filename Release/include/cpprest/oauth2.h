@@ -36,6 +36,8 @@ namespace details
 class oauth2_handler;
 
 // Constant strings for OAuth 2.0.
+// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+// during the static initialization of another translation unit, so do not use them there.
 typedef utility::string_t oauth2_string;
 class oauth2_strings
 {

@@ -93,6 +93,10 @@ typedef utility::string_t method;
 /// <summary>
 /// Common HTTP methods.
 /// </summary>
+/// <remarks>
+/// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+/// during the static initialization of another translation unit, so do not use them there.
+/// </remarks>
 class methods
 {
 public:
@@ -123,6 +127,10 @@ namespace details
 /// <summary>
 /// Constants for MIME types.
 /// </summary>
+/// <remarks>
+/// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+/// during the static initialization of another translation unit, so do not use them there.
+/// </remarks>
 class mime_types
 {
 public:
@@ -136,6 +144,10 @@ public:
 /// <summary>
 /// Constants for charset types.
 /// </summary>
+/// <remarks>
+/// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+/// during the static initialization of another translation unit, so do not use them there.
+/// </remarks>
 class charset_types
 {
 public:
@@ -174,6 +186,10 @@ struct http_status_to_phrase
 /// <summary>
 /// Constants for the HTTP headers mentioned in RFC 2616.
 /// </summary>
+/// <remarks>
+/// These strings are initialized dynamically. When cpprest is a static library, they may not be initialized yet
+/// during the static initialization of another translation unit, so do not use them there.
+/// </remarks>
 class header_names
 {
 public:
