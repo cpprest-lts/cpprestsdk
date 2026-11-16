@@ -106,12 +106,13 @@ _ASYNCRTIMP void __cdecl inplace_tolower(std::wstring& target) CPPREST_NOEXCEPT
 }
 
 #if !defined(ANDROID) && !defined(__ANDROID__)
-std::once_flag g_c_localeFlag;
-std::unique_ptr<scoped_c_thread_locale::xplat_locale, void (*)(scoped_c_thread_locale::xplat_locale*)> g_c_locale(
-    nullptr, [](scoped_c_thread_locale::xplat_locale*) {});
 scoped_c_thread_locale::xplat_locale scoped_c_thread_locale::c_locale()
 {
-    std::call_once(g_c_localeFlag, [&]() {
+    typedef std::unique_ptr<scoped_c_thread_locale::xplat_locale, void (*)(scoped_c_thread_locale::xplat_locale*)>
+        c_locale_ptr;
+    // A function-local static is initialized on first use, so this also works when called during
+    // the static initialization of another translation unit, such as one linked with a static cpprest
+    static const c_locale_ptr instance = []() -> c_locale_ptr {
         scoped_c_thread_locale::xplat_locale* clocale = new scoped_c_thread_locale::xplat_locale();
 #ifdef _WIN32
         *clocale = _create_locale(LC_ALL, "C");
@@ -135,11 +136,9 @@ scoped_c_thread_locale::xplat_locale scoped_c_thread_locale::c_locale()
             delete clocale;
         };
 #endif
-        g_c_locale =
-            std::unique_ptr<scoped_c_thread_locale::xplat_locale, void (*)(scoped_c_thread_locale::xplat_locale*)>(
-                clocale, deleter);
-    });
-    return *g_c_locale;
+        return c_locale_ptr(clocale, deleter);
+    }();
+    return *instance;
 }
 #endif
 
