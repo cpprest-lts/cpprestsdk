@@ -65,6 +65,10 @@ function(cpprest_find_boost)
   # FindBoost continually breaks imported targets whenever boost updates.
   if(1)
     target_include_directories(cpprestsdk_boost_internal INTERFACE "$<BUILD_INTERFACE:${Boost_INCLUDE_DIR}>")
+    # The public headers include Boost, so the installed target needs its include directories
+    if(TARGET Boost::boost)
+      target_link_libraries(cpprestsdk_boost_internal INTERFACE "$<INSTALL_INTERFACE:Boost::boost>")
+    endif()
     set(_prev)
     set(_libs)
     foreach(_lib ${Boost_LIBRARIES})
