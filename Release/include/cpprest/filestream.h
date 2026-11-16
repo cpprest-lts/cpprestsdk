@@ -284,10 +284,10 @@ protected:
         if (written == sizeof(_CharType))
         {
             delete callback;
-            return pplx::task_from_result<int_type>(ch);
+            return pplx::task_from_result<int_type>(traits::to_int_type(ch));
         }
 
-        return pplx::create_task(result_tce).then([sharedCh](size_t) { return static_cast<int_type>(*sharedCh); });
+        return pplx::create_task(result_tce).then([sharedCh](size_t) { return traits::to_int_type(*sharedCh); });
     }
 
     /// <summary>
@@ -386,7 +386,7 @@ protected:
                     auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
                     _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
                     m_info->m_rdpos += 1;
-                    return pplx::task_from_result<int_type>(ch);
+                    return pplx::task_from_result<int_type>(traits::to_int_type(ch));
                 }
             }
 
@@ -426,7 +426,7 @@ protected:
         auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
         _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
         m_info->m_rdpos += 1;
-        return (int_type)ch;
+        return traits::to_int_type(ch);
     }
 
     pplx::task<int_type> _getcImpl()
@@ -441,7 +441,7 @@ protected:
             {
                 auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
                 _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
-                return pplx::task_from_result<int_type>(ch);
+                return pplx::task_from_result<int_type>(traits::to_int_type(ch));
             }
         }
 
@@ -487,7 +487,7 @@ protected:
 
         auto bufoff = m_info->m_rdpos - m_info->m_bufoff;
         _CharType ch = m_info->m_buffer[bufoff * sizeof(_CharType)];
-        return (int_type)ch;
+        return traits::to_int_type(ch);
     }
 
     /// <summary>

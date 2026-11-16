@@ -824,6 +824,28 @@ SUITE(memstream_tests)
         streambuf_putc(buf);
     }
 
+    TEST(char_buffers_putc_high_bit)
+    {
+        // putc returns the character written as a non-negative int_type, even where char is signed
+        {
+            stringstreambuf buf;
+            VERIFY_ARE_EQUAL(0xFF, buf.putc('\xFF').get());
+        }
+        {
+            char chars[1];
+            rawptr_buffer<char> buf(chars, sizeof(chars));
+            VERIFY_ARE_EQUAL(0xFF, buf.putc('\xFF').get());
+        }
+        {
+            container_buffer<std::vector<char>> buf;
+            VERIFY_ARE_EQUAL(0xFF, buf.putc('\xFF').get());
+        }
+        {
+            streams::producer_consumer_buffer<char> buf;
+            VERIFY_ARE_EQUAL(0xFF, buf.putc('\xFF').get());
+        }
+    }
+
     TEST(string_buffer_putn)
     {
         stringstreambuf buf;
@@ -1128,6 +1150,29 @@ SUITE(memstream_tests)
         streams::producer_consumer_buffer<uint8_t> buf = create_producer_consumer_buffer_with_data(s);
         streambuf_sbumpc(buf, s);
     }
+
+    TEST(char_buffers_read_high_bit)
+    {
+        // Reading a character returns it as a non-negative int_type, which cannot be mistaken for eof,
+        // even where char is signed
+        char data[] = {'\xFF', '\xFF'};
+        std::vector<char> s(std::begin(data), std::end(data));
+        auto verify = [](streams::streambuf<char> buf)
+        {
+            VERIFY_ARE_EQUAL(0xFF, buf.sgetc());
+            VERIFY_ARE_EQUAL(0xFF, buf.getc().get());
+            VERIFY_ARE_EQUAL(0xFF, buf.sbumpc());
+            VERIFY_ARE_EQUAL(0xFF, buf.bumpc().get());
+        };
+        verify(stringstreambuf(std::string(std::begin(data), std::end(data))));
+        verify(rawptr_buffer<char>(data, sizeof(data), std::ios::in));
+        verify(container_buffer<std::vector<char>>(s));
+        streams::producer_consumer_buffer<char> buf;
+        VERIFY_ARE_EQUAL(buf.putn_nocopy(s.data(), s.size()).get(), s.size());
+        buf.close(std::ios_base::out).get();
+        verify(buf);
+    }
+
     TEST(string_buffer_nextc)
     {
         std::string s("Hello World");

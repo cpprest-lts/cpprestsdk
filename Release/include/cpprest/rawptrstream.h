@@ -149,7 +149,7 @@ protected:
     virtual pplx::task<int_type> _putc(_CharType ch)
     {
         if (m_current_position >= m_size) return pplx::task_from_result<int_type>(traits::eof());
-        int_type retVal = (this->write(&ch, 1) == 1) ? static_cast<int_type>(ch) : traits::eof();
+        int_type retVal = (this->write(&ch, 1) == 1) ? traits::to_int_type(ch) : traits::eof();
         return pplx::task_from_result<int_type>(retVal);
     }
 
@@ -419,7 +419,7 @@ private:
     {
         _CharType value{};
         auto read_size = this->read(&value, 1, advance);
-        return read_size == 1 ? static_cast<int_type>(value) : traits::eof();
+        return read_size == 1 ? traits::to_int_type(value) : traits::eof();
     }
 
     /// <summary>
