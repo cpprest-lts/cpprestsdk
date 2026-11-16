@@ -1,4 +1,5 @@
 #include <cpprest/http_client.h>
+#include <cpprest/http_listener.h>
 #include <cpprest/json.h>
 #if !defined(CPPREST_EXCLUDE_WEBSOCKETS)
 #include <cpprest/ws_client.h>
@@ -24,8 +25,10 @@ int main()
         return 1;
     }
 
-    // Constructing the clients links the HTTP client and the websocket client, and with them OpenSSL
+    // Constructing the clients and the listener links their implementations, so this checks that the package
+    // provides the libraries they need, whichever implementations cpprest was built with
     web::http::client::http_client client(U("https://localhost/"));
+    web::http::experimental::listener::http_listener listener(U("http://localhost:34568/"));
 #if !defined(CPPREST_EXCLUDE_WEBSOCKETS)
     web::websockets::client::websocket_client ws;
 #endif
