@@ -30,7 +30,7 @@ websocket_client_task_impl::~websocket_client_task_impl() CPPREST_NOEXCEPT
 
 void websocket_client_task_impl::set_handler()
 {
-    m_callback_client->set_message_handler([=](const websocket_incoming_message& msg) {
+    m_callback_client->set_message_handler([this](const websocket_incoming_message& msg) {
         pplx::task_completion_event<websocket_incoming_message>
             tce; // This will be set if there are any tasks waiting to receive a message
         {
@@ -51,7 +51,7 @@ void websocket_client_task_impl::set_handler()
     });
 
     m_callback_client->set_close_handler(
-        [=](websocket_close_status, const utility::string_t& reason, const std::error_code& error_code) {
+        [this](websocket_close_status, const utility::string_t& reason, const std::error_code& error_code) {
             close_pending_tasks_with_error(websocket_exception(error_code, reason));
         });
 }

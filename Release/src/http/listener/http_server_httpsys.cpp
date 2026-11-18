@@ -272,7 +272,7 @@ pplx::task<void> http_windows_server::register_listener(
 pplx::task<void> http_windows_server::unregister_listener(
     _In_ web::http::experimental::listener::details::http_listener_impl* pListener)
 {
-    return pplx::create_task([=]() {
+    return pplx::create_task([this, pListener]() {
         // First remove listener registration.
         std::unique_ptr<listener_registration> registration;
         {
