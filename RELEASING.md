@@ -36,13 +36,20 @@ These steps use 2.10.21 as an example.
 
 ## Changelog Entry
 
-The changelog and the GitHub release notes refer to a pull request in this fork as `#N`, which GitHub links to this repository, and to an issue or pull request in microsoft/cpprestsdk as `microsoft/cpprestsdk#N`. The entries for 2.10.19 and earlier are from microsoft/cpprestsdk, and keep its form.
+The changelog and the GitHub release notes name the repository in each reference to an issue or pull request, such as `cpprest-lts/cpprestsdk#59` or `microsoft/cpprestsdk#1790`. GitHub links these references in both. It does not link a bare `#N` in `changelog.md`, and a bare `#N` in copied text links to the repository that it is pasted into. The entries for 2.10.19 and earlier are from microsoft/cpprestsdk, and keep its form.
 
-The changelog entry groups the changes into sections, in this order: `Security:`, `Bug fixes:`, `Build:`, and `Tests, CI and documentation:`. It leaves out a section that has no changes. Each change starts with its pull request in this fork, and a long change continues on the next line with a two-space indent:
+The entry starts with its title, underlined so that GitHub shows it as a heading:
 
 ```
-* #59 Remove the port from the Host header before checking the certificate name
-  (fixes microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
+cpprestsdk (2.10.21+cpprest-lts)
+--------------------------------
+```
+
+The entry groups the changes into sections, in this order: `Security:`, `Bug fixes:`, `Build:`, and `Tests, CI and documentation:`. It leaves out a section that has no changes. Each change starts with its pull request in this fork. A change longer than 110 characters continues on the next line with a two-space indent:
+
+```
+* cpprest-lts/cpprestsdk#59 Remove the port from the Host header before checking the certificate name (fixes
+  microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
 ```
 
 The entry ends with the release date:
@@ -51,12 +58,12 @@ The entry ends with the release date:
 -- cpprest-lts, FRI, 6 Nov 2026
 ```
 
-GitHub joins a line to the one before it unless a blank line separates them. The entry has a blank line after its title, before each section, and before the release date.
+GitHub joins a line to the one before it unless a blank line separates them. The entry has a blank line after the underline, before each section, and before the release date.
 
 ## Release Notes
 
 The GitHub release notes start with a paragraph that summarizes the release. It states the minimum versions of the compiler, CMake, Boost and OpenSSL, and which websocketpp release the submodule uses. The notes then list the changes under the same sections as the changelog entry, as `###` headings. Each change ends with its pull request in this fork:
 
 ```
-- Remove the port from the `Host` header before checking the certificate name (#59, fixes microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
+- Remove the port from the `Host` header before checking the certificate name (cpprest-lts/cpprestsdk#59, fixes microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
 ```
