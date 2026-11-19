@@ -1,3 +1,30 @@
+cpprestsdk (2.10.21+cpprest-lts)
+--------------------------------
+
+Bug fixes:
+* cpprest-lts/cpprestsdk#63 Fix Base64 encoding and decoding on big-endian systems
+* cpprest-lts/cpprestsdk#65, cpprest-lts/cpprestsdk#67 Fix single-character file reads on big-endian systems,
+  and return a character with the top bit set as a non-negative int_type rather than eof()
+* cpprest-lts/cpprestsdk#66 Fix JSON parsing during static initialization with a static cpprest
+* cpprest-lts/cpprestsdk#70 Parse a relative reference with a colon in its query or fragment (fixes
+  microsoft/cpprestsdk#1628)
+
+Build:
+* cpprest-lts/cpprestsdk#66 Link Boost::boost from the installed cpprestsdk_boost_internal target, so that
+  find_package(cpprestsdk) works when Boost is not in a default include directory
+* cpprest-lts/cpprestsdk#69 Capture this explicitly in the websocket client and http.sys listener, because
+  C++20 deprecates capturing it through [=]
+
+Tests, CI and documentation:
+* cpprest-lts/cpprestsdk#66 Document that the public string constants, such as methods and header_names, must
+  not be used during static initialization with a static cpprest, and test a static cpprest in CI
+* cpprest-lts/cpprestsdk#68 Run the tests that need the internet as a separate ctest test with the network
+  label, so that ctest -LE network runs offline
+* cpprest-lts/cpprestsdk#71, cpprest-lts/cpprestsdk#72 Describe how to make a release, and name the repository
+  in changelog references
+
+-- cpprest-lts, THU, 19 Nov 2026
+
 cpprestsdk (2.10.20+cpprest-lts)
 --------------------------------
 
@@ -42,9 +69,9 @@ Build:
 * cpprest-lts/cpprestsdk#48 Use websocketpp 0.8.4+cpprest-lts as the submodule
 * cpprest-lts/cpprestsdk#51 Don't define dllimport as nothing on platforms other than Windows
   (microsoft/cpprestsdk#1723)
-* Don't capture this implicitly through [=] in public headers, which C++20 deprecates
-  (microsoft/cpprestsdk#1827)
-* Include <chrono> for system_clock (microsoft/cpprestsdk#1811)
+* cpprest-lts/cpprestsdk#37 Don't capture this implicitly through [=] in public headers, which C++20
+  deprecates (microsoft/cpprestsdk#1827)
+* microsoft/cpprestsdk#1811 Include <chrono> for system_clock
 
 Tests, CI and documentation:
 * cpprest-lts/cpprestsdk#3, cpprest-lts/cpprestsdk#22, cpprest-lts/cpprestsdk#47 Add Asio http_listener close
