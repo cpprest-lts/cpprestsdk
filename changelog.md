@@ -1,51 +1,65 @@
 cpprestsdk (2.10.20+cpprest-lts)
+--------------------------------
 
 The first release of the cpprest-lts fork, https://github.com/cpprest-lts/cpprestsdk.
-#N refers to a pull request in the fork, and microsoft/cpprestsdk#N to an issue or pull request in
-microsoft/cpprestsdk.
 
 Security:
-* #55 Reject header names and values that would add other header lines (fixes microsoft/cpprestsdk#761)
-* #49 Validate chunk sizes in the Asio HTTP listener
-* #50 Fix a memory leak in zero_memory_deleter on platforms other than Windows (microsoft/cpprestsdk#1808)
-* #23 Reject invalid surrogate escapes in JSON strings
+* cpprest-lts/cpprestsdk#55 Reject header names and values that would add other header lines (fixes
+  microsoft/cpprestsdk#761)
+* cpprest-lts/cpprestsdk#49 Validate chunk sizes in the Asio HTTP listener
+* cpprest-lts/cpprestsdk#50 Fix a memory leak in zero_memory_deleter on platforms other than Windows
+  (microsoft/cpprestsdk#1808)
+* cpprest-lts/cpprestsdk#23 Reject invalid surrogate escapes in JSON strings
 
 Bug fixes:
-* #2, #25 Fix races when closing an Asio http_listener, and release its port
-* #26 Reply 400 Bad Request to invalid UTF-8 in http.sys listener requests
-* #53 Fix the Windows link failure with the Asio client and listener, without WebSockets
+* cpprest-lts/cpprestsdk#2, cpprest-lts/cpprestsdk#25 Fix races when closing an Asio http_listener, and
+  release its port
+* cpprest-lts/cpprestsdk#26 Reply 400 Bad Request to invalid UTF-8 in http.sys listener requests
+* cpprest-lts/cpprestsdk#53 Fix the Windows link failure with the Asio client and listener, without WebSockets
   (microsoft/cpprestsdk#1466), and fix closing the Asio listener and invalid UTF-8 request headers on Windows
-* #56 Fix formatting the last day of a 400-year cycle (microsoft/cpprestsdk#1767)
-* #57 Fix task_options(cancellation_token, task_continuation_context) ignoring the token (microsoft/cpprestsdk#1824)
-* #58 Return write errors from container_buffer in the task (fixes microsoft/cpprestsdk#1453)
-* #59 Remove the port from the Host header before checking the certificate name
-  (fixes microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
-* #61 Don't index an empty buffer for the WinHTTP response headers (fixes microsoft/cpprestsdk#1212)
+* cpprest-lts/cpprestsdk#56 Fix formatting the last day of a 400-year cycle (microsoft/cpprestsdk#1767)
+* cpprest-lts/cpprestsdk#57 Fix task_options(cancellation_token, task_continuation_context) ignoring the token
+  (microsoft/cpprestsdk#1824)
+* cpprest-lts/cpprestsdk#58 Return write errors from container_buffer in the task (fixes
+  microsoft/cpprestsdk#1453)
+* cpprest-lts/cpprestsdk#59 Remove the port from the Host header before checking the certificate name (fixes
+  microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
+* cpprest-lts/cpprestsdk#61 Don't index an empty buffer for the WinHTTP response headers (fixes
+  microsoft/cpprestsdk#1212)
 
 Build:
-* #17, #18 Build with Boost 1.87 and later, and configure with Boost 1.89 and later
-* #19 Build with MSVC 14.51 (Visual Studio 2026)
-* #20 Fix GCC 13 format truncation warnings, and include <boost/bind/bind.hpp> (microsoft/cpprestsdk#1706)
-* #27 Build streams.h without std::char_traits<uint8_t>, which libc++ 19 removed
-* #28 Find OpenSSL with find_package on every platform
-* #36 Define json::value's unique_ptr constructor and destructor out of line
-* #44 Don't force libc++ when building with Clang on macOS
-* #42 Use the websocketpp::websocketpp target when the package defines one
-* #45 Require CMake 3.10
-* #48 Use websocketpp 0.8.4+cpprest-lts as the submodule
-* #51 Don't define dllimport as nothing on platforms other than Windows (microsoft/cpprestsdk#1723)
-* Don't capture this implicitly through [=] in public headers, which C++20 deprecates (microsoft/cpprestsdk#1827)
+* cpprest-lts/cpprestsdk#17, cpprest-lts/cpprestsdk#18 Build with Boost 1.87 and later, and configure with
+  Boost 1.89 and later
+* cpprest-lts/cpprestsdk#19 Build with MSVC 14.51 (Visual Studio 2026)
+* cpprest-lts/cpprestsdk#20 Fix GCC 13 format truncation warnings, and include <boost/bind/bind.hpp>
+  (microsoft/cpprestsdk#1706)
+* cpprest-lts/cpprestsdk#27 Build streams.h without std::char_traits<uint8_t>, which libc++ 19 removed
+* cpprest-lts/cpprestsdk#28 Find OpenSSL with find_package on every platform
+* cpprest-lts/cpprestsdk#36 Define json::value's unique_ptr constructor and destructor out of line
+* cpprest-lts/cpprestsdk#44 Don't force libc++ when building with Clang on macOS
+* cpprest-lts/cpprestsdk#42 Use the websocketpp::websocketpp target when the package defines one
+* cpprest-lts/cpprestsdk#45 Require CMake 3.10
+* cpprest-lts/cpprestsdk#48 Use websocketpp 0.8.4+cpprest-lts as the submodule
+* cpprest-lts/cpprestsdk#51 Don't define dllimport as nothing on platforms other than Windows
+  (microsoft/cpprestsdk#1723)
+* Don't capture this implicitly through [=] in public headers, which C++20 deprecates
+  (microsoft/cpprestsdk#1827)
 * Include <chrono> for system_clock (microsoft/cpprestsdk#1811)
 
 Tests, CI and documentation:
-* #3, #22, #47 Add Asio http_listener close tests, move test ports out of the ephemeral port ranges, and fix Clang
-  warnings in the tests
-* #16, #31, #37, #39, #41, #43, #52, #54 Build and test on Ubuntu, macOS and Windows with GitHub Actions
-* #30, #32, #33, #34, #35, #60 Describe this fork in the README and SECURITY.md, and state the minimum versions
+* cpprest-lts/cpprestsdk#3, cpprest-lts/cpprestsdk#22, cpprest-lts/cpprestsdk#47 Add Asio http_listener close
+  tests, move test ports out of the ephemeral port ranges, and fix Clang warnings in the tests
+* cpprest-lts/cpprestsdk#16, cpprest-lts/cpprestsdk#31, cpprest-lts/cpprestsdk#37, cpprest-lts/cpprestsdk#39,
+  cpprest-lts/cpprestsdk#41, cpprest-lts/cpprestsdk#43, cpprest-lts/cpprestsdk#52, cpprest-lts/cpprestsdk#54
+  Build and test on Ubuntu, macOS and Windows with GitHub Actions
+* cpprest-lts/cpprestsdk#30, cpprest-lts/cpprestsdk#32, cpprest-lts/cpprestsdk#33, cpprest-lts/cpprestsdk#34,
+  cpprest-lts/cpprestsdk#35, cpprest-lts/cpprestsdk#60 Describe this fork in the README and SECURITY.md, and
+  state the minimum versions
 
 -- cpprest-lts, FRI, 6 Nov 2026
 
 cpprestsdk (2.10.19)
+--------------------
 * PR#1982 make Uri.is_host_loopback() only return true for localhost and 127.0.0.1 exactly. 
   The old behavior could potentially return "true" for URLs that were not, in fact, local,
   and this could cause security issues if is_host_loopback was used in certain ways.
@@ -55,6 +69,7 @@ cpprestsdk (2.10.19)
 * PR#1577 export http_exception for non Windows builds using visibility macros.
 
 cpprestsdk (2.10.18)
+--------------------
 * PR#1571 Add ability to parse and emit the NT Epoch 1601-01-01T00:00:00Z
 * PR#1571 Update vcpkg submodule
 * Update CI configuration
@@ -62,6 +77,7 @@ cpprestsdk (2.10.18)
 -- cpprestsdk team MON, 1 Feb 2021 20:02:00 -0700
 
 cpprestsdk (2.10.17)
+--------------------
 * PR#1550 Fix year calculation for the last day of a leap year
 * PR#1523 Fix wrong linking of Apple Frameworks on MacOS
 * PR#1520 Define __STDC_FORMAT_MACROS when it hasn't been defined to avoid duplicate define error. 
@@ -71,6 +87,7 @@ cpprestsdk (2.10.17)
 -- cpprestsdk team WED, 30 Dec 2020 20:08:00 -0700
 
 cpprestsdk (2.10.16)
+--------------------
 * PR#1383 CMake fixes + CMake search for OpenSSL (macOS)
 * PR#1392 Update submodule websocketpp to 0.8.2
 * PR#1393 Do not report errors (such as EBADF and EINVAL) from setsockopt here, since this is a performance optimization only, and hard errors will be picked up by the following operation
@@ -85,6 +102,7 @@ cpprestsdk (2.10.16)
 -- cpprestsdk team <askcasablanca@microsoft.com>  FRI, 24 Apr 2020 16:56:00 -0700
 
 cpprestsdk (2.10.15)
+--------------------
 * Extremely special thanks to @garethsb-sony for a large number of contributions in this release
 * PR#1209 Workarounds for two GCC 4.7.2 bugs with lambda functions
 * PR#1220 Fix SxS debug-release builds with Visual Studio
@@ -112,6 +130,7 @@ cpprestsdk (2.10.15)
 -- cpprestsdk team <askcasablanca@microsoft.com>  THR, 22 Feb 2020 08:31:00 -0800
 
 cpprestsdk (2.10.14)
+--------------------
 * Potential breaking change warning: This release changes the "default" proxy for the WinHTTP backend to go back to WINHTTP_ACCESS_TYPE_DEFAULT_PROXY. See https://github.com/microsoft/cpprestsdk/commit/60e067e71aebebdda5d82955060f5f0821c9df1d for more details. To get automatic WPAD behavior, set the proxy to auto detect.
 * macOS with Brew and iOS builds have been disabled and are no longer being tested because our dependency boost for ios project appears to be broken with current releases of XCode as on the Azure Pipelines machines. We are interested in macOS / iOS folks who know what's going on here in contributing a repair to turn this back on.
 * PR#1133 Add switches to make apiscan happy.
@@ -132,6 +151,7 @@ cpprestsdk (2.10.14)
 -- cpprestsdk team <askcasablanca@microsoft.com>  TUE, 16 Jul 2019 09:06:00 +0200
 
 cpprestsdk (2.10.13)
+--------------------
 * PR#1120 Fix off by one error in leap years before year 2000, and bad day names
 * PR#1117 Parse and emit years from 1900 to 9999, and remove environment variable dependence on Android
 * PR#1106 Paranoia for overflow of sprintf buffer in the year 10000
@@ -143,6 +163,7 @@ cpprestsdk (2.10.13)
 -- cpprestsdk team <askcasablanca@microsoft.com>  WED, 24 Apr 2019 10:57:00 -0800
 
 cpprestsdk (2.10.12)
+--------------------
 * PR#1088 Fix data race, GitHub #1085
 * PR#1084 Fix oauth nonces containing nulls.
 * PR#1082 Workaround data-race on websocketpp's _htonll function
@@ -152,6 +173,7 @@ cpprestsdk (2.10.12)
 -- cpprestsdk team <askcasablanca@microsoft.com>  TUE, 26 Mar 2019 11:57:00 -0800
 
 cpprestsdk (2.10.11)
+--------------------
 * PR##1073 Move get_jvm_env back into the crossplat namespace
 * PR##1049 Add the missing ssl::context callback in websocket_client_config
 * PR##1072 Gate stdext::checked_array_iterator usage on _ITERATOR_DEBUG_LEVEL
