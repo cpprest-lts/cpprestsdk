@@ -1,42 +1,48 @@
 cpprestsdk (2.10.20+cpprest-lts)
+
 The first release of the cpprest-lts fork, https://github.com/cpprest-lts/cpprestsdk.
-cpprest-lts#N refers to a pull request in the fork, and #N to an issue or pull request in microsoft/cpprestsdk.
+#N refers to a pull request in the fork, and microsoft/cpprestsdk#N to an issue or pull request in
+microsoft/cpprestsdk.
+
 Security:
-* cpprest-lts#55 Reject header names and values that would add other header lines (fixes #761)
-* cpprest-lts#49 Validate chunk sizes in the Asio HTTP listener
-* cpprest-lts#50 Fix a memory leak in zero_memory_deleter on platforms other than Windows (#1808)
-* cpprest-lts#23 Reject invalid surrogate escapes in JSON strings
+* #55 Reject header names and values that would add other header lines (fixes microsoft/cpprestsdk#761)
+* #49 Validate chunk sizes in the Asio HTTP listener
+* #50 Fix a memory leak in zero_memory_deleter on platforms other than Windows (microsoft/cpprestsdk#1808)
+* #23 Reject invalid surrogate escapes in JSON strings
+
 Bug fixes:
-* cpprest-lts#2, cpprest-lts#25 Fix races when closing an Asio http_listener, and release its port
-* cpprest-lts#26 Reply 400 Bad Request to invalid UTF-8 in http.sys listener requests
-* cpprest-lts#53 Fix the Windows link failure with the Asio client and listener, without WebSockets (#1466),
-  and fix closing the Asio listener and invalid UTF-8 request headers on Windows
-* cpprest-lts#56 Fix formatting the last day of a 400-year cycle (#1767)
-* cpprest-lts#57 Fix task_options(cancellation_token, task_continuation_context) ignoring the token (#1824)
-* cpprest-lts#58 Return write errors from container_buffer in the task (fixes #1453)
-* cpprest-lts#59 Remove the port from the Host header before checking the certificate name (fixes #1790 and #1471)
-* cpprest-lts#61 Don't index an empty buffer for the WinHTTP response headers (fixes #1212)
+* #2, #25 Fix races when closing an Asio http_listener, and release its port
+* #26 Reply 400 Bad Request to invalid UTF-8 in http.sys listener requests
+* #53 Fix the Windows link failure with the Asio client and listener, without WebSockets
+  (microsoft/cpprestsdk#1466), and fix closing the Asio listener and invalid UTF-8 request headers on Windows
+* #56 Fix formatting the last day of a 400-year cycle (microsoft/cpprestsdk#1767)
+* #57 Fix task_options(cancellation_token, task_continuation_context) ignoring the token (microsoft/cpprestsdk#1824)
+* #58 Return write errors from container_buffer in the task (fixes microsoft/cpprestsdk#1453)
+* #59 Remove the port from the Host header before checking the certificate name
+  (fixes microsoft/cpprestsdk#1790 and microsoft/cpprestsdk#1471)
+* #61 Don't index an empty buffer for the WinHTTP response headers (fixes microsoft/cpprestsdk#1212)
+
 Build:
-* cpprest-lts#17, cpprest-lts#18 Build with Boost 1.87 and later, and configure with Boost 1.89 and later
-* cpprest-lts#19 Build with MSVC 14.51 (Visual Studio 2026)
-* cpprest-lts#20 Fix GCC 13 format truncation warnings, and include <boost/bind/bind.hpp> (#1706)
-* cpprest-lts#27 Build streams.h without std::char_traits<uint8_t>, which libc++ 19 removed
-* cpprest-lts#28 Find OpenSSL with find_package on every platform
-* cpprest-lts#36 Define json::value's unique_ptr constructor and destructor out of line
-* cpprest-lts#44 Don't force libc++ when building with Clang on macOS
-* cpprest-lts#42 Use the websocketpp::websocketpp target when the package defines one
-* cpprest-lts#45 Require CMake 3.10
-* cpprest-lts#48 Use websocketpp 0.8.4+cpprest-lts as the submodule
-* cpprest-lts#51 Don't define dllimport as nothing on platforms other than Windows (#1723)
-* Don't capture this implicitly through [=] in public headers, which C++20 deprecates (#1827)
-* Include <chrono> for system_clock (#1811)
+* #17, #18 Build with Boost 1.87 and later, and configure with Boost 1.89 and later
+* #19 Build with MSVC 14.51 (Visual Studio 2026)
+* #20 Fix GCC 13 format truncation warnings, and include <boost/bind/bind.hpp> (microsoft/cpprestsdk#1706)
+* #27 Build streams.h without std::char_traits<uint8_t>, which libc++ 19 removed
+* #28 Find OpenSSL with find_package on every platform
+* #36 Define json::value's unique_ptr constructor and destructor out of line
+* #44 Don't force libc++ when building with Clang on macOS
+* #42 Use the websocketpp::websocketpp target when the package defines one
+* #45 Require CMake 3.10
+* #48 Use websocketpp 0.8.4+cpprest-lts as the submodule
+* #51 Don't define dllimport as nothing on platforms other than Windows (microsoft/cpprestsdk#1723)
+* Don't capture this implicitly through [=] in public headers, which C++20 deprecates (microsoft/cpprestsdk#1827)
+* Include <chrono> for system_clock (microsoft/cpprestsdk#1811)
+
 Tests, CI and documentation:
-* cpprest-lts#3, cpprest-lts#22, cpprest-lts#47 Add Asio http_listener close tests, move test ports out of the
-  ephemeral port ranges, and fix Clang warnings in the tests
-* cpprest-lts#16, cpprest-lts#31, cpprest-lts#37, cpprest-lts#39, cpprest-lts#41, cpprest-lts#43, cpprest-lts#52,
-  cpprest-lts#54 Build and test on Ubuntu, macOS and Windows with GitHub Actions
-* cpprest-lts#30, cpprest-lts#32, cpprest-lts#33, cpprest-lts#34, cpprest-lts#35, cpprest-lts#60 Describe this
-  fork in the README and SECURITY.md, and state the minimum versions
+* #3, #22, #47 Add Asio http_listener close tests, move test ports out of the ephemeral port ranges, and fix Clang
+  warnings in the tests
+* #16, #31, #37, #39, #41, #43, #52, #54 Build and test on Ubuntu, macOS and Windows with GitHub Actions
+* #30, #32, #33, #34, #35, #60 Describe this fork in the README and SECURITY.md, and state the minimum versions
+
 -- cpprest-lts, FRI, 6 Nov 2026
 
 cpprestsdk (2.10.19)
@@ -52,6 +58,7 @@ cpprestsdk (2.10.18)
 * PR#1571 Add ability to parse and emit the NT Epoch 1601-01-01T00:00:00Z
 * PR#1571 Update vcpkg submodule
 * Update CI configuration
+
 -- cpprestsdk team MON, 1 Feb 2021 20:02:00 -0700
 
 cpprestsdk (2.10.17)
@@ -60,6 +67,7 @@ cpprestsdk (2.10.17)
 * PR#1520 Define __STDC_FORMAT_MACROS when it hasn't been defined to avoid duplicate define error. 
 * PR#1415 Delete apparently broken .vcxprojs and .pfxes.
 * Removed defunct email contact information from the readme
+
 -- cpprestsdk team WED, 30 Dec 2020 20:08:00 -0700
 
 cpprestsdk (2.10.16)
@@ -73,6 +81,7 @@ cpprestsdk (2.10.16)
 * PR#1372 Static analyzer (PVS Studio) fixes
 * PR#1350 Expose json::value::parse for UTF8 string on Windows
 * PR#1344 libcpprestsdk: fix building as a static library
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  FRI, 24 Apr 2020 16:56:00 -0700
 
 cpprestsdk (2.10.15)
@@ -99,6 +108,7 @@ cpprestsdk (2.10.15)
 * PR#1340 Add Ubuntu 18.04 testing.
 * PR#1342 Use C++11 synchronization classes under macOS too
 * PR#1339 Fix tcp::resolver data race in the asio backend and be defensive against empty results
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  THR, 22 Feb 2020 08:31:00 -0800
 
 cpprestsdk (2.10.14)
@@ -118,6 +128,7 @@ cpprestsdk (2.10.14)
 * PR#1185 Update boost-for-android for Android NDK r20 and disable macOS Homebrew.
 * PR#1187 Replace CPPREST_TARGET_XP with version checks, remove ""s, and other cleanup
 * PR#1188 Remove proxy settings detection behavior in "default proxy mode."
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  TUE, 16 Jul 2019 09:06:00 +0200
 
 cpprestsdk (2.10.13)
@@ -128,6 +139,7 @@ cpprestsdk (2.10.13)
 * PR#1097 Allow error handling for time out in http_client_asio handle_connect
 * PR#1094 Avoid tripping over 32 bit time_t mistakes.
 * PR#1093 Don't initialize atomic_flag with 0.
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  WED, 24 Apr 2019 10:57:00 -0800
 
 cpprestsdk (2.10.12)
@@ -136,6 +148,7 @@ cpprestsdk (2.10.12)
 * PR#1082 Workaround data-race on websocketpp's _htonll function
 * PR#1080 Fix thread not joined
 * PR#1076 Rewrite date formatting and parsing
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  TUE, 26 Mar 2019 11:57:00 -0800
 
 cpprestsdk (2.10.11)
@@ -151,12 +164,14 @@ cpprestsdk (2.10.11)
 * PR##1053 Update vcpkg.
 * PR##1032 Fix HTTP/1.0 'Keep-Alive' handling in http_client
 * PR##1040 Disable WINHTTP_AUTOPROXY_OPTIONS machinery when using WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY.
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  WED, 20 Mar 2019 02:30:00 -0800
 
 cpprestsdk (2.10.10)
 ----------------------
 * PR#1023 Handle multi-byte unicode characters in json parsing
 * PR#1033 Temporary fix for VS2013. Note that VS2013 is still not in support.
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  TUE, 29 Jan 2019 22:38:00 -0800
 
 cpprestsdk (2.10.9)
@@ -171,6 +186,7 @@ cpprestsdk (2.10.9)
 * PR#1017 Add in support for adding i386 slice when building for 32-bit targets. Also improve messaging and add means to clean
 * PR#1024 http_compression.cpp: fix build with gcc 4.7
 * PR#1022 Resolve double free when WinHttpSendRequest fails
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  FRI, 18 Jan 2019 16:58:00 -0800
 
 cpprestsdk (2.10.8)
@@ -186,6 +202,7 @@ cpprestsdk (2.10.8)
 * PR#952 cmake: add code to detect system brotli library
 * PR#963 Fix Brotli compress_helper early termination issue
 * PR#961 Fixes iOS builds and makes it more future proof
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  WED, 14 Nov 2018 10:24:00 -0800
 
 cpprestsdk (2.10.7)
@@ -206,16 +223,19 @@ cpprestsdk (2.10.7)
 * PR#937 Remove _ASYNCRTIMP from ~http_listener() and implement inline
 * PR#940 Avoid using identifiers reserved by C++ in header guards
 * PR#943 blackjack sample: use vector instead of shared pointer for array
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  MON, 30 Oct 2018 20:32:00 -0800
 
 cpprestsdk (2.10.6)
 ----------------------
 * PR#844 Fix clang build error
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  MON, 30 Aug 2018 16:51:00 -0800
 
 cpprestsdk (2.10.5)
 ----------------------
 * Issue#842 Fix incorrect `cpprest/version.h`
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  FRI, 17 Aug 2018 09:47:00 -0800
 
 cpprestsdk (2.10.4)
@@ -228,6 +248,7 @@ cpprestsdk (2.10.4)
 * PR#762 improved handling of dead connections in the connection pool on Asio.
 * PR#750 improved error handling in the accept() call in `http_listener`
 * PR#776 improved the iOS buildsystem
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  WED, 15 Aug 2018 12:35:00 -0800
 
 cpprestsdk (2.10.3)
@@ -237,6 +258,7 @@ cpprestsdk (2.10.3)
 * Issue#804 fixed a regression due to compression support; we no longer fail on unknown Content-Encoding headers if we did not set Accepts-Encoding
 * PR#813 fixes build failure with boost 1.63
 * PR#779 PR#787 suppress and fix some warnings with new versions of gcc and clang
+
 -- cpprestsdk team <askcasablanca@microsoft.com>  THU, 2 Aug 2018 15:52:00 -0800
 
 cpprestsdk (2.10.0)
