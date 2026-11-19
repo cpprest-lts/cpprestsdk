@@ -33,7 +33,7 @@ if (NOT CPPREST_EXCLUDE_WEBSOCKETS)
       WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
       COMMAND test_runner /badssl /select:@Requires=badssl $<TARGET_FILE_NAME:websocketsclient_test>
     )
-    set_tests_properties(websocketsclient_test_badssl PROPERTIES LABELS badssl)
+    set_tests_properties(websocketsclient_test_badssl PROPERTIES LABELS "badssl;network")
   endif()
   if(NOT TEST_LIBRARY_TARGET_TYPE STREQUAL "OBJECT")
     target_link_libraries(websocketsclient_test PRIVATE websockettest_utilities)

@@ -32,7 +32,12 @@ if(BUILD_SHARED_LIBS)
     WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     COMMAND test_runner /badssl /select:@Requires=badssl $<TARGET_FILE_NAME:httpclient_test>
   )
-  set_tests_properties(httpclient_test_badssl PROPERTIES LABELS badssl)
+  set_tests_properties(httpclient_test_badssl PROPERTIES LABELS "badssl;network")
+  add_test(NAME httpclient_test_network
+    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+    COMMAND test_runner /network /select:@Requires=network $<TARGET_FILE_NAME:httpclient_test>
+  )
+  set_tests_properties(httpclient_test_network PROPERTIES LABELS network)
 endif()
 if(TEST_LIBRARY_TARGET_TYPE STREQUAL "OBJECT")
   target_include_directories(httpclient_test PRIVATE ../utilities/include)
