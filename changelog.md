@@ -42,9 +42,9 @@ Build:
 * cpprest-lts/cpprestsdk#48 Use websocketpp 0.8.4+cpprest-lts as the submodule
 * cpprest-lts/cpprestsdk#51 Don't define dllimport as nothing on platforms other than Windows
   (microsoft/cpprestsdk#1723)
-* Don't capture this implicitly through [=] in public headers, which C++20 deprecates
-  (microsoft/cpprestsdk#1827)
-* Include <chrono> for system_clock (microsoft/cpprestsdk#1811)
+* cpprest-lts/cpprestsdk#37 Don't capture this implicitly through [=] in public headers, which C++20
+  deprecates (microsoft/cpprestsdk#1827)
+* microsoft/cpprestsdk#1811 Include <chrono> for system_clock
 
 Tests, CI and documentation:
 * cpprest-lts/cpprestsdk#3, cpprest-lts/cpprestsdk#22, cpprest-lts/cpprestsdk#47 Add Asio http_listener close
